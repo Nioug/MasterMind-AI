@@ -1,5 +1,13 @@
 #pragma once
 
+//
+// class Result stocke le résultat d'une combinaison de MasterMind
+// elle indique la quantité de pions correctement et incorrectement placés
+//
+
+#include <iostream>
+using namespace std;
+
 enum pos {GOOD, BAD, NONE};
 
 class Result
@@ -18,3 +26,6 @@ public:
 private:
 	int result[2];
 };
+
+
+ostream& operator<<(ostream&, Result);

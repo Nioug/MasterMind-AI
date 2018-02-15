@@ -21,12 +21,13 @@ public:
 
 	void remove(Combo);
 
-	void showList() const;
+	void showList(vector<Combo>&) const;
 
 private:
 	int tokens;
 	int colors;
 	vector<Combo> list;
+	vector<Combo> init;
 	
 	void listFill(vector<int>);
 };

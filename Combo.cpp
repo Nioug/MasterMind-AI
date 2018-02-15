@@ -5,6 +5,7 @@
 
 /*
 	Constructors
+	Le constructeur par défaut crée une combinaison de 4 pions avec la valeur 1
 */
 Combo::Combo(int _size)
 {
@@ -56,15 +57,25 @@ void Combo::setAt(int _integer, int _index)
 
 
 
-string Combo::toString() const
+/*
+	retourne une string avec un caractère séparateur optionnel (par défaut sans espace)
+*/
+string Combo::toString(char separator) const
 {
-	string temp = "";
+	string str = "";
+	string sep = "";
+
+	if (separator != DEFAULT_SEPARATOR)
+		sep = separator;
+
+
 	for (int i = 0; i < combo.size(); ++i)
 	{
-		temp += string(to_string(this->getAt(i)));
-		temp += " ";
+		str += string(to_string(this->getAt(i)));
+		if (i < combo.size() - 1)
+			str += sep;
 	}
-	return temp;
+	return str;
 }
 
 

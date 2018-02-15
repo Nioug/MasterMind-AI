@@ -7,22 +7,25 @@ Game::Game(int _colors, int _tokens)
 {
 	colors = _colors;
 	tokens = _tokens;
+	vector<int> temp;
 
 	srand(time(nullptr)); // use current time as seed for random generator
 
 	// COMPOSITION DE LA COMBINAISON AU HASARD
 	for (int i = 0; i < _tokens; i++)
 	{
-		comboToFind.push_back(rand() % colors + 1);
+		temp.push_back(rand() % colors + 1);
 	}
+	comboToFind = temp;
 }
 
 
 int Game::getTokens() const		{ return tokens; }
 int Game::getColors() const		{ return colors; }
+Result Game::getResult() const	{ return comboRestult; }
 
 
-vector<int> Game::getComboToFind() const
+Combo Game::getComboToFind() const
 {
 	return comboToFind;
 }
@@ -33,7 +36,8 @@ Result Game::play(Combo _combo)
 	if (_combo.getSize() != tokens)
 	{
 		throw TOKENS;
-		return Result(0, 0);
+		comboRestult = Result(0, 0);
+		return comboRestult;
 	}		
 
 	vector<bool> lockGood(tokens, false);
@@ -65,5 +69,21 @@ Result Game::play(Combo _combo)
 		}
 	}
 
-	return Result(goodPos, badPos);
+	comboRestult = Result(goodPos, badPos);
+	return comboRestult;
+}
+
+
+void Game::tryCombo(Combo c)
+{
+	comboToTry = Combo(c);
+}
+
+
+bool Game::win() const
+{
+	if (comboRestult.getGoodPos() == tokens)
+		return true;
+	else
+		return false;
 }

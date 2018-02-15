@@ -43,6 +43,18 @@ MindList::MindList(int _colors, int _tokens)
 			}
 		}
 	}
+
+
+	// VECTOR D'INITILISATION 
+	for (int i = 0; i < tokens; i+=2)
+	{
+		vector<int> temp;
+		temp.push_back(i);
+		temp.push_back(i);
+		temp.push_back(i + 1);
+		temp.push_back(i + 1);
+		init.push_back(temp);
+	}
 }
 
 
@@ -119,10 +131,10 @@ void MindList::remove(Combo ref)
 /*
 	AFFICHE LA LISTE COMPLETE
 */
-void MindList::showList() const
+void MindList::showList(vector<Combo> &vect) const
 {
-	for (int iCombo = 0; iCombo < list.size(); iCombo++)
+	for (int iCombo = 0; iCombo < vect.size(); iCombo++)
 	{
-		cout << iCombo << ":\t" << list[iCombo] << endl;
+		cout << iCombo << ":\t" << vect[iCombo] << endl;
 	}
 }
