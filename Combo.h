@@ -27,12 +27,18 @@ public:
 	int getSize() const;
 	int getAt(int _index) const;
 	void setAt(int _integer, int _index);
+
+	int getPriority() const;
+	void setPriority(int);
+
+	int colorsAmount() const;
 	string toString(char separator = DEFAULT_SEPARATOR) const;
 
 	int operator[](int index) const;
 
 private:
 	vector<int> combo;
+	int priority;
 };
 
 ostream& operator<<(ostream& output, Combo combo);

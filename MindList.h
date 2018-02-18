@@ -13,21 +13,28 @@ class MindList
 {
 public:
 	MindList(int colors = DEFAULT_COLORS, int tokens = DEFAULT_TOKENS);
+	int setPriority(Combo);
 
-	void setTokens(int);
-	void setColors(int);
 	int getTokens() const;
 	int getColors() const;
 
-	void remove(Combo);
+	vector<Combo> getAllCombos() const;
+	vector<Combo> getInitCombos() const;
 
-	void showList(vector<Combo>&) const;
+	int remove(Combo);
+	void removeAt(int);
+	void popFrontInit();
+
+	void show(vector<Combo>&) const;
+	void showList() const;
 
 private:
 	int tokens;
 	int colors;
-	vector<Combo> list;
-	vector<Combo> init;
+	vector<Combo> allCombos;
+	vector<Combo> initCombos;
+
+	int maxSize;
 	
 	void listFill(vector<int>);
 };

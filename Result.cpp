@@ -56,7 +56,28 @@ void Result::setResult(int _result[])
 
 
 
+Result::operator int()
+{
+	return getGoodPos() + getBadPos();
+}
+
+
 ostream& operator<<(ostream& out, Result r)
 {
 	return out << "V: " << r.getGoodPos() << " - X: " << r.getBadPos();
+}
+
+
+bool operator==(const Result &r1, const Result &r2)
+{
+	if (r1.getBadPos() == r2.getBadPos() && r1.getGoodPos() == r2.getGoodPos())
+		return true;
+	else
+		return false;
+}
+
+
+bool operator!=(const Result &r1, const Result &r2)
+{
+	return !(r1 == r2);
 }

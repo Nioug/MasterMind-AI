@@ -31,13 +31,15 @@ public:
 
 	int getTokens() const;
 	int getColors() const;
+	Combo getTriedCombo() const;
 	Result getResult() const;
 
+	void setComboToTry(Combo);
+	void setcomboToFind(Combo);
+	
 	Result play(Combo);
-	void tryCombo(Combo);
 	bool win() const;
 
 	// TEST FUNCTIONS
 	Combo getComboToFind() const;
-
 };

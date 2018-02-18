@@ -23,9 +23,13 @@ public:
 	void setBad(int badPos);
 	void setResult(int result[]);
 
+	operator int();
+
 private:
 	int result[2];
 };
 
 
 ostream& operator<<(ostream&, Result);
+bool operator==(const Result &r1, const Result &r2);
+bool operator!=(const Result &r1, const Result &r2);

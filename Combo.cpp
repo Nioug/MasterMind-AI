@@ -11,18 +11,21 @@ Combo::Combo(int _size)
 {
 	for (int i = 0; i < _size; ++i)
 		combo.push_back(1);
+	priority = 0;
 }
 
 Combo::Combo(vector<int> _combo)
 {
 	for (auto elt : _combo)
 		combo.push_back(elt);
+	priority = 0;
 }
 
 Combo::Combo(int _combo[], int _size)
 {
 	for (int i = 0; i < _size; ++i)
 		combo.push_back(_combo[i]);
+	priority = 0;
 }
 
 
@@ -43,6 +46,8 @@ int Combo::getAt(int _index) const
 		throw INDEX_ERROR;
 }
 
+int Combo::getPriority() const			{ return priority;  }
+
 
 /*
 	Setters
@@ -53,6 +58,32 @@ void Combo::setAt(int _integer, int _index)
 		combo[_index] = _integer;
 	else
 		throw INDEX_ERROR;
+}
+
+void Combo::setPriority(int _priority)
+{
+	priority = _priority;
+}
+
+
+
+int Combo::colorsAmount() const
+{
+	vector<int> temp;
+	temp.push_back(combo[0]);
+	for (int iC = 1; iC < combo.size(); iC++)
+	{
+		bool found = false;
+		for (int iT = 0; iT < temp.size(); iT++)
+		{
+			if (combo[iC] == temp[iT])
+				found = true;
+		}
+
+		if (!found)
+			temp.push_back(combo[iC]);
+	}
+	return temp.size();
 }
 
 

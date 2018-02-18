@@ -20,15 +20,14 @@ Game::Game(int _colors, int _tokens)
 }
 
 
-int Game::getTokens() const		{ return tokens; }
-int Game::getColors() const		{ return colors; }
-Result Game::getResult() const	{ return comboRestult; }
+int		Game::getTokens() const			{ return tokens;		}
+int		Game::getColors() const			{ return colors;		}
+Combo	Game::getTriedCombo() const		{ return comboToTry;	}
+Result	Game::getResult() const			{ return comboRestult;	}
+Combo	Game::getComboToFind() const	{ return comboToFind;	}
 
-
-Combo Game::getComboToFind() const
-{
-	return comboToFind;
-}
+void	Game::setComboToTry(Combo c)	{ comboToTry = Combo(c); }
+void	Game::setcomboToFind(Combo c)	{ comboToFind = Combo(c); }
 
 
 Result Game::play(Combo _combo)
@@ -39,6 +38,8 @@ Result Game::play(Combo _combo)
 		comboRestult = Result(0, 0);
 		return comboRestult;
 	}		
+
+	comboToTry = _combo;
 
 	vector<bool> lockGood(tokens, false);
 	vector<bool> lockBad(tokens, false);
@@ -68,15 +69,9 @@ Result Game::play(Combo _combo)
 			}
 		}
 	}
-
+	
 	comboRestult = Result(goodPos, badPos);
 	return comboRestult;
-}
-
-
-void Game::tryCombo(Combo c)
-{
-	comboToTry = Combo(c);
 }
 
 
