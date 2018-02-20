@@ -5,24 +5,32 @@
 
 /*
 	Constructors
-	Le constructeur par défaut crée une combinaison de 4 pions avec la valeur 1
+	Le constructeur par défaut crée une combinaison de _size pions avec la valeur 1 par défaut
 */
 Combo::Combo(int _size)
 {
 	for (int i = 0; i < _size; ++i)
 		combo.push_back(1);
+	priority = 0;
 }
 
 Combo::Combo(vector<int> _combo)
 {
 	for (auto elt : _combo)
 		combo.push_back(elt);
+	priority = 0;
 }
 
 Combo::Combo(int _combo[], int _size)
 {
 	for (int i = 0; i < _size; ++i)
 		combo.push_back(_combo[i]);
+	priority = 0;
+}
+
+Combo::Combo(string combo)
+{
+
 }
 
 
@@ -32,16 +40,9 @@ Combo::Combo(int _combo[], int _size)
 	Getters
 */
 vector<int>	Combo::getVector() const	{ return combo;			}
-
 int Combo::getSize() const				{ return combo.size();	}
-
-int Combo::getAt(int _index) const
-{
-	if (_index < combo.size())
-		return combo[_index]; 
-	else
-		throw INDEX_ERROR;
-}
+int Combo::getAt(int i) const			{ return combo[i];		}
+int Combo::getPriority() const			{ return priority;		}
 
 
 /*
@@ -55,28 +56,35 @@ void Combo::setAt(int _integer, int _index)
 		throw INDEX_ERROR;
 }
 
+void Combo::setPriority(int _priority)
+{
+	priority = _priority;
+}
+
 
 
 /*
-	retourne une string avec un caractère séparateur optionnel (par défaut sans espace)
+	retourne un string avec un caractère séparateur optionnel (par défaut sans espace)
 */
-string Combo::toString(char separator) const
+string Combo::toString(string separator) const
 {
 	string str = "";
 	string sep = "";
 
 	if (separator != DEFAULT_SEPARATOR)
 		sep = separator;
-
+	else
 
 	for (int i = 0; i < combo.size(); ++i)
 	{
-		str += string(to_string(this->getAt(i)));
+		str += string(to_string((*this)[i]));
 		if (i < combo.size() - 1)
 			str += sep;
 	}
 	return str;
 }
+
+
 
 
 
@@ -132,7 +140,12 @@ bool operator==(const Combo &c1, const Combo &c2)
 int Combo::operator[](int index) const
 {
 	if (index < this->getSize())
+	{
 		return this->getAt(index);
+	}
 	else
+	{
 		throw INDEX_ERROR;
+		return NULL;
+	}
 }

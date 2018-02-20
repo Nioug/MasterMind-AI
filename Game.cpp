@@ -3,34 +3,44 @@
 
 #include "Game.h"
 
-Game::Game(int _colors, int _tokens)
+
+/*
+	Constructeur
+*/
+Game::Game(int _mode, int _colors, int _tokens)
 {
+	mode = _mode;
 	colors = _colors;
 	tokens = _tokens;
-	vector<int> temp;
+	vector<int> temp(_tokens, 0);
 
 	srand(time(nullptr)); // use current time as seed for random generator
 
 	// COMPOSITION DE LA COMBINAISON AU HASARD
 	for (int i = 0; i < _tokens; i++)
 	{
-		temp.push_back(rand() % colors + 1);
+		temp[i] = rand() % colors + 1;
 	}
 	comboToFind = temp;
 }
 
 
-int Game::getTokens() const		{ return tokens; }
-int Game::getColors() const		{ return colors; }
-Result Game::getResult() const	{ return comboRestult; }
+int		Game::getTokens() const			{ return tokens;		}			// retourne le nombre de jetons d'une combinaison du jeu
+int		Game::getColors() const			{ return colors;		}			// retourne le nombre de couleurs utilisées
+Combo	Game::getTriedCombo() const		{ return comboToTry;	}			// retourne la combinaison tentée
+Combo	Game::getComboToFind() const	{ return comboToFind;	}			// retourne la combinaison à trouver
+
+Result	Game::getResult() const			{ return comboRestult;	}			// retourne le résultat généré par la méthode play()
+void	Game::setResult(Result r)		{ comboRestult = r;		}			// définit un résultat (multijoueur)
+
+void	Game::setComboToTry(Combo c)	{ comboToTry = Combo(c); }			// recoit la combinaison à comparer à comboToFind
+void	Game::setcomboToFind(Combo c)	{ comboToFind = Combo(c); }			// redéfinit la combinaison à trouver (multijoueur)
 
 
-Combo Game::getComboToFind() const
-{
-	return comboToFind;
-}
 
-
+/* 
+	Calcule un résultat en comparant comboToTry et comboToFind 
+*/
 Result Game::play(Combo _combo)
 {
 	if (_combo.getSize() != tokens)
@@ -39,6 +49,8 @@ Result Game::play(Combo _combo)
 		comboRestult = Result(0, 0);
 		return comboRestult;
 	}		
+
+	comboToTry = _combo;
 
 	vector<bool> lockGood(tokens, false);
 	vector<bool> lockBad(tokens, false);
@@ -68,18 +80,16 @@ Result Game::play(Combo _combo)
 			}
 		}
 	}
-
+	
 	comboRestult = Result(goodPos, badPos);
 	return comboRestult;
 }
 
 
-void Game::tryCombo(Combo c)
-{
-	comboToTry = Combo(c);
-}
 
-
+/*
+	retourne "true" si la combinaison tentée est gagnante
+*/
 bool Game::win() const
 {
 	if (comboRestult.getGoodPos() == tokens)

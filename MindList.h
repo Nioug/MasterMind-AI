@@ -1,33 +1,50 @@
 #pragma once
 
-using namespace std;
+#ifndef MINDLIST_H
+#define MINDLIST_H
 
 #include <vector>
-
 #include "Combo.h"
 
 #define DEFAULT_TOKENS 4
 #define DEFAULT_COLORS 8
 
+using namespace std;
+
 class MindList
 {
 public:
 	MindList(int colors = DEFAULT_COLORS, int tokens = DEFAULT_TOKENS);
+	virtual ~MindList();
 
-	void setTokens(int);
-	void setColors(int);
+	int setPriority(Combo);
+
 	int getTokens() const;
 	int getColors() const;
 
-	void remove(Combo);
+	vector<Combo>* getAllCombos() const;
+	vector<Combo>* getInitCombos() const;
 
-	void showList(vector<Combo>&) const;
+	int getActualSize();
+
+	int remove(Combo);
+	void removeAt(int);
+	void switchBack(int);
+	void popFrontInit();
+
+	void show(vector<Combo>&) const;
+	void showListWP() const;
 
 private:
 	int tokens;
 	int colors;
-	vector<Combo> list;
-	vector<Combo> init;
+	vector<Combo> *allCombos;
+	vector<Combo> *initCombos;
+
+	int maxSize;
+	int rejected;
 	
 	void listFill(vector<int>);
 };
+
+#endif // !MINDLIIST_H
